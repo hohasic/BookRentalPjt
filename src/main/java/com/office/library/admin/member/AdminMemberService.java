@@ -1,5 +1,7 @@
 package com.office.library.admin.member;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +83,28 @@ public class AdminMemberService {
 			System.out.println(CLASS_NAME.concat("ADMIN LOGIN FAIL!!"));
 			
 			return null;
+			
+		}
+		
+	}
+
+	public List<AdminMemberDto> listupAdmin() {
+		System.out.println(CLASS_NAME.concat("listupAdmin()"));
+		
+		return adminMemberDao.selectAdmins();
+		
+	}
+
+	public void setAdminApproval(int a_m_no) {
+		System.out.println(CLASS_NAME.concat("setAdminApproval()"));
+		
+		int result = adminMemberDao.updateAdminApproval(a_m_no);
+		
+		if (result > 0) {
+			System.out.println(CLASS_NAME.concat("ADMIN APPROVAL UPDATE SUCCESS!!"));
+			
+		} else {
+			System.out.println(CLASS_NAME.concat("ADMIN APPROVAL UPDATE FAIL!!"));
 			
 		}
 		

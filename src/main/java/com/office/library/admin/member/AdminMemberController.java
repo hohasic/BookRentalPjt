@@ -1,12 +1,17 @@
 package com.office.library.admin.member;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin/member")
@@ -107,4 +112,66 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 관리자 목록 (/admin/member/listupAdmin)
+	 */
+	/*
+	@GetMapping("/listupAdmin")
+	public String listupAdmin(Model model) {
+		System.out.println(CLASS_NAME.concat("listupAdmin()"));
+		
+		String nextPage = "admin/member/listup_admins";
+		
+		List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
+		
+		model.addAttribute("adminMemberDtos", adminMemberDtos);
+		
+		return nextPage;
+		
+	}
+	*/
+	
+	// by ModelAndView = view + model
+	@GetMapping("/listupAdmin")
+	public ModelAndView listupAdmin() {
+		System.out.println(CLASS_NAME.concat("listupAdmin()"));
+		
+		String nextPage = "admin/member/listup_admins";
+		
+		List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
+		
+		ModelAndView modelAndView = new ModelAndView();
+		// 데이터 주입
+		modelAndView.addObject("adminMemberDtos", adminMemberDtos);
+		// 뷰 설정
+		modelAndView.setViewName(nextPage);
+		
+		return modelAndView;
+		
+	}
+	
+	// /admin/member/setAdminApproval
+	@GetMapping("/setAdminApproval")
+	public String setAdminApproval(@RequestParam("a_m_no") int a_m_no) {
+		System.out.println(CLASS_NAME.concat("setAdminApproval()"));
+		
+		String nextPage = "redirect:/admin/member/listupAdmin";
+		
+		adminMemberService.setAdminApproval(a_m_no);
+		
+		return nextPage;
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
