@@ -1,5 +1,7 @@
 package com.office.library.admin.member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,14 +73,35 @@ public class AdminMemberController {
 	 * 회원(관리자) 로그인 확인  (/admin/member/loginConfirm)
 	 */
 	@PostMapping("/loginConfirm")
-	public String loginConfirm(AdminMemberDto adminMemberDto) {
+	public String loginConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
 		System.out.println(CLASS_NAME.concat("loginConfirm()"));
 		
 		String nextPage = "admin/member/login_ok";
 		
 		String loginedAdminMemberId = adminMemberService.loginConfirm(adminMemberDto);
-		if (loginedAdminMemberId == null) 
+		if (loginedAdminMemberId == null) {
 			nextPage = "admin/member/login_ng";
+			
+		} else {
+			session.setAttribute("loginedAdminMemberId", loginedAdminMemberId);
+			session.setMaxInactiveInterval(60 * 30);
+			
+		}
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 관리자 로그 아웃 화인
+	 */
+	@GetMapping("/logoutConfirm")
+	public String logoutConfirm(HttpSession session) {
+		System.out.println(CLASS_NAME.concat("logoutConfirm()"));
+		
+		String nextPage = "redirect:/admin";
+		
+		session.removeAttribute("loginedAdminMemberId");
 		
 		return nextPage;
 		

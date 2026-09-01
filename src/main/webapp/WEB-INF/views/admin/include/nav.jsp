@@ -5,24 +5,49 @@
 <nav>
 	<div id="nav_wrap">
 		
-		<div class="menu">
+		
+		<%
+			Object object = session.getAttribute("loginedAdminMemberId");
 			
-			<ul>
+			if (object != null) {
+			String loginedAdminMemberId = String.valueOf(object);
+		%>
+			<div class="menu">
 			
-				<li><a href="#none">로그아웃</a></li>
-				<li><a href="#none">계정수정</a></li>
-				<li><a href="#none">관리자목록</a></li>
-				<li><a href="#none">대출도서</a></li>
-				<li><a href="#none">전체도서</a></li>
-				<li><a href="#none">희망도서(입고처리)</a></li>
-				<li><a href="#none">도서등록</a></li>
+				<ul>
 				
-				<li><a href="<c:url value='/admin/member/loginForm' />">로그인</a></li>
-				<li><a href="<c:url value='/admin/member/createAccountForm' />">회원가입</a></li>
+					<li><a href="<c:url value='/admin/member/logoutConfirm' />">로그아웃</a></li>
+					<li><a href="#none">계정수정</a></li>
+					
+					<c:if test="${loginedAdminMemberId eq 'super admin'}">
+						<li><a href="#none">관리자목록</a></li>
+					</c:if>
+					
+					<li><a href="#none">대출도서</a></li>
+					<li><a href="#none">전체도서</a></li>
+					<li><a href="#none">희망도서(입고처리)</a></li>
+					<li><a href="#none">도서등록</a></li>
+				
+				</ul>
+				
+			</div>
+		<%
+			} else {
+		%>
+			<div class="menu">
 			
-			</ul>
-			
-		</div>
+				<ul>
+	
+					<li><a href="<c:url value='/admin/member/loginForm' />">로그인</a></li>
+					<li><a href="<c:url value='/admin/member/createAccountForm' />">회원가입</a></li>
+				
+				</ul>
+				
+			</div>
+		<%
+			}
+					
+		%>
 		
 		<div class="search">
 			<input type="text" name="b_name" placeholder="Enter the name of the book you are looking for.">

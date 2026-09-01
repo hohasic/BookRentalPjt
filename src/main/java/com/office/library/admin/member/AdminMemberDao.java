@@ -136,7 +136,7 @@ public class AdminMemberDao {
 				
 			}
 			
-		});
+		}, a_m_id);
 		
 		return adminMemberDtos.size() > 0 ? adminMemberDtos.get(0) : null;
 		
