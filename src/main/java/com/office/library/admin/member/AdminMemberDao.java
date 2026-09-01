@@ -1,9 +1,12 @@
 package com.office.library.admin.member;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -98,6 +101,44 @@ public class AdminMemberDao {
 		
 		
 		return result;
+		
+	}
+
+	public AdminMemberDto selectAdmin(String a_m_id) {
+		System.out.println(CLASS_NAME.concat("selectAdmin()"));
+		
+		String sql =  "SELECT * FROM tbl_admin_member "
+					+ "WHERE a_m_id = ? AND a_m_approval > 0";
+		
+		List<AdminMemberDto> adminMemberDtos = new ArrayList<AdminMemberDto>();
+		
+		adminMemberDtos = jdbcTemplate.query(sql, new RowMapper<AdminMemberDto>() {
+
+			@Override
+			public AdminMemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+				
+				AdminMemberDto adminMemberDto = new AdminMemberDto();
+				
+				adminMemberDto.setA_m_no(rs.getInt("a_m_no"));
+				adminMemberDto.setA_m_approval(rs.getInt("a_m_approval"));
+				adminMemberDto.setA_m_id(rs.getString("a_m_id"));
+				adminMemberDto.setA_m_pw(rs.getString("a_m_pw"));
+				adminMemberDto.setA_m_name(rs.getString("a_m_name"));
+				adminMemberDto.setA_m_gender(rs.getString("a_m_gender"));
+				adminMemberDto.setA_m_part(rs.getString("a_m_part"));
+				adminMemberDto.setA_m_position(rs.getString("a_m_position"));
+				adminMemberDto.setA_m_mail(rs.getString("a_m_mail"));
+				adminMemberDto.setA_m_phone(rs.getString("a_m_phone"));
+				adminMemberDto.setA_m_reg_date(rs.getString("a_m_reg_date"));
+				adminMemberDto.setA_m_mod_date(rs.getString("a_m_mod_date"));
+				
+				return adminMemberDto;
+				
+			}
+			
+		});
+		
+		return adminMemberDtos.size() > 0 ? adminMemberDtos.get(0) : null;
 		
 	}
 

@@ -57,4 +57,33 @@ public class AdminMemberService {
 		
 	}
 
+	public String loginConfirm(AdminMemberDto adminMemberDto) {			// 1234  == 1234
+		System.out.println(CLASS_NAME.concat("loginConfirm()"));
+		
+		AdminMemberDto selectedAdminMemberDto =
+				adminMemberDao.selectAdmin(adminMemberDto.getA_m_id());
+		
+		if (selectedAdminMemberDto != null) {
+			
+			if(passwordEncoder.matches(adminMemberDto.getA_m_pw(), selectedAdminMemberDto.getA_m_pw())) {
+				System.out.println(CLASS_NAME.concat("ADMIN LOGIN SUCCESS!!"));
+				
+				return selectedAdminMemberDto.getA_m_id();
+				
+			} else {
+				System.out.println(CLASS_NAME.concat("ADMIN LOGIN FAIL!!"));
+				
+				return null;
+				
+			}
+			
+		} else {
+			System.out.println(CLASS_NAME.concat("ADMIN LOGIN FAIL!!"));
+			
+			return null;
+			
+		}
+		
+	}
+
 }

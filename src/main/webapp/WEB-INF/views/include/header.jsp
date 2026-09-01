@@ -8,7 +8,7 @@
 		<div class="menu">
 			<ul>
 				<li><a class="user" href="#none">USER HOME</a></li>
-				<li><a class="admin" href="#none">ADMIN HOME</a></li>
+				<li><a class="admin" href="<c:url value='/admin'/>">ADMIN HOME</a></li>
 			</ul>
 		</div>
 		<div class="title">

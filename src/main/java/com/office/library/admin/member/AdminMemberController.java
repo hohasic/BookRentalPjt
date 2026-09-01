@@ -53,7 +53,35 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 회원(관리자) 로그인 양식  (/admin/member/loginForm)
+	 */
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		System.out.println(CLASS_NAME.concat("loginForm()"));
+		
+		String nextPage = "admin/member/login_form";
+		
+		return nextPage;
+		
+	}
 	
 	
+	/*
+	 * 회원(관리자) 로그인 확인  (/admin/member/loginConfirm)
+	 */
+	@PostMapping("/loginConfirm")
+	public String loginConfirm(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("loginConfirm()"));
+		
+		String nextPage = "admin/member/login_ok";
+		
+		String loginedAdminMemberId = adminMemberService.loginConfirm(adminMemberDto);
+		if (loginedAdminMemberId == null) 
+			nextPage = "admin/member/login_ng";
+		
+		return nextPage;
+		
+	}
 	
 }
