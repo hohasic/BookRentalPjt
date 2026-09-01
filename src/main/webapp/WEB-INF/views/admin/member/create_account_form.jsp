@@ -56,6 +56,10 @@
 				
 			</div>
 			
+			<div class="login">
+				<a href="<c:url value='/admin/member/loginForm' />">login</a>
+			</div>
+			
 		</div>
 	
 	</section>

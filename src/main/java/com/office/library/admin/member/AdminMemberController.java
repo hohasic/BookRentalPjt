@@ -46,7 +46,7 @@ public class AdminMemberController {
 		String nextPage = "admin/member/create_account_ok";
 		
 		int result = adminMemberService.createAccountConfirm(adminMemberDto);
-		if (result <= 0) 
+		if (result <= AdminMemberService.ADMIN_ACCOUNT_ALREADY_EXIST) 
 			nextPage = "admin/member/create_account_ng";
 		
 		return nextPage;

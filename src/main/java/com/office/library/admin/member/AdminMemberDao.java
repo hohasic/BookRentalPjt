@@ -3,7 +3,6 @@ package com.office.library.admin.member;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +11,13 @@ public class AdminMemberDao {
 	
 	final private String CLASS_NAME = "[AdminMemberDao] ";
 	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
+	final private JdbcTemplate jdbcTemplate;
+	
+//	@Autowired
+	public AdminMemberDao(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+		
+	}
 	
 	public boolean isAdminMember(String a_m_id) {
 		System.out.println(CLASS_NAME.concat("isAdminMember()"));
