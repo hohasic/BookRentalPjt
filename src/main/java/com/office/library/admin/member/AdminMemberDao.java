@@ -152,7 +152,8 @@ public class AdminMemberDao {
 	public List<AdminMemberDto> selectAdmins() {
 		System.out.println(CLASS_NAME.concat("selectAdmins()"));
 		
-		String sql = "SELECT * FROM tbl_admin_member";
+		String sql =  "SELECT * FROM tbl_admin_member "
+					+ "ORDER BY a_m_no DESC";  // ASC or DESC
 		
 		List<AdminMemberDto> adminMemberDtos = new ArrayList<AdminMemberDto>();
 		
@@ -205,6 +206,42 @@ public class AdminMemberDao {
 		try {
 			
 			result = jdbcTemplate.update(sql, a_m_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
+		
+	}
+
+	public int updateAdminAccount(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("updateAdminAccount()"));
+		
+		String sql =  "UPDATE "
+						+ "tbl_admin_member "
+					+ "SET "
+						+ "a_m_name = ?, "
+						+ "a_m_gender = ?, "
+						+ "a_m_part = ?, "
+						+ "a_m_position = ?, "
+						+ "a_m_mail = ?, "
+						+ "a_m_phone = ? "
+					+ "WHERE "
+						+ "a_m_no = ?";
+		
+		int result = -1;
+		
+		try {
+			result = jdbcTemplate.update(sql, 
+											adminMemberDto.getA_m_name(),
+											adminMemberDto.getA_m_gender(),
+											adminMemberDto.getA_m_part(),
+											adminMemberDto.getA_m_position(),
+											adminMemberDto.getA_m_mail(),
+											adminMemberDto.getA_m_phone(), 
+											adminMemberDto.getA_m_no());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

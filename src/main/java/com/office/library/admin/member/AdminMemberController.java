@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -161,4 +162,50 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 관리자 회원 정보 수정 양식
+	 * /modifyAccountForm
+	 */
+	@GetMapping("/modifyAccountForm")
+	public String modifyAccountForm(HttpSession session, Model model) {
+		System.out.println(CLASS_NAME.concat("modifyAccountForm()"));
+		
+		String nextPage = "admin/member/modify_account_form";
+		
+		Object object = session.getAttribute("loginedAdminMemberId");
+		AdminMemberDto adminMemberDto = adminMemberService.modifyAccountForm(String.valueOf(object));
+		
+		model.addAttribute("adminMemberDto", adminMemberDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 관리자 회원 정보 수정 확인
+	 * /admin/member/modifyAccountConfirm
+	 */
+	@PostMapping("/modifyAccountConfirm")
+	public String modifyAccountConfirm(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("modifyAccountConfirm()"));
+		
+		String nextpage = "admin/member/modify_account_ok";
+		
+		int result = adminMemberService.modifyAccountConfirm(adminMemberDto);
+		if (result <= 0) {
+			nextpage = "admin/member/modify_account_ng";
+		}
+		
+		return nextpage;
+		
+	}
+	
 }
+
+
+
+
+
+
+
+

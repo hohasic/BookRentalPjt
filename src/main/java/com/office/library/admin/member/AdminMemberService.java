@@ -1,6 +1,9 @@
 package com.office.library.admin.member;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -107,6 +110,20 @@ public class AdminMemberService {
 			System.out.println(CLASS_NAME.concat("ADMIN APPROVAL UPDATE FAIL!!"));
 			
 		}
+		
+	}
+
+	public AdminMemberDto modifyAccountForm(String a_m_id) {
+		System.out.println(CLASS_NAME.concat("modifyAccountForm()"));
+		
+		return adminMemberDao.selectAdmin(a_m_id);
+		
+	}
+	
+	public int modifyAccountConfirm(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("modifyAccountConfirm()"));
+		
+		return adminMemberDao.updateAdminAccount(adminMemberDto);
 		
 	}
 
