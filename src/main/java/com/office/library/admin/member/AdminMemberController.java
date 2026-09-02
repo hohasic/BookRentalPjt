@@ -200,6 +200,20 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 비밀번호 찾기
+	 * /admin/member/findPassword
+	 */
+	@GetMapping("/findPassword")
+	public String findPassword() {
+		System.out.println(CLASS_NAME.concat("findPassword()"));
+		
+		String nextPage = "admin/member/find_password_form";
+		
+		return nextPage;
+		
+	}
+	
 }
 
 
