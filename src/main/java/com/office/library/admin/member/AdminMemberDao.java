@@ -252,6 +252,76 @@ public class AdminMemberDao {
 		
 	}
 
+	public AdminMemberDto selectAdmin(String a_m_id, String a_m_name, String a_m_mail) {
+		System.out.println(CLASS_NAME.concat("selectAdmin()"));
+		
+		String sql =  "SELECT "
+						+ "* "
+					+ "FROM "
+						+ "tbl_admin_member "
+					+ "WHERE "
+						+ "a_m_id = ? AND "
+						+ "a_m_name = ? AND "
+						+ "a_m_mail = ?";
+		
+		List<AdminMemberDto> adminMemberDtos = new ArrayList<AdminMemberDto>();
+		
+		try {
+			
+			adminMemberDtos = jdbcTemplate.query(sql, new RowMapper<AdminMemberDto>() {
+
+				@Override
+				public AdminMemberDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+					AdminMemberDto adminMemberDto = new AdminMemberDto();
+					
+					adminMemberDto.setA_m_no(rs.getInt("a_m_no"));
+					adminMemberDto.setA_m_approval(rs.getInt("a_m_approval"));
+					adminMemberDto.setA_m_id(rs.getString("a_m_id"));
+					adminMemberDto.setA_m_pw(rs.getString("a_m_pw"));
+					adminMemberDto.setA_m_name(rs.getString("a_m_name"));
+					adminMemberDto.setA_m_gender(rs.getString("a_m_gender"));
+					adminMemberDto.setA_m_part(rs.getString("a_m_part"));
+					adminMemberDto.setA_m_position(rs.getString("a_m_position"));
+					adminMemberDto.setA_m_mail(rs.getString("a_m_mail"));
+					adminMemberDto.setA_m_phone(rs.getString("a_m_phone"));
+					adminMemberDto.setA_m_reg_date(rs.getString("a_m_reg_date"));
+					adminMemberDto.setA_m_mod_date(rs.getString("a_m_mod_date"));
+					
+					return adminMemberDto;
+					
+				}
+				
+			}, a_m_id, a_m_name, a_m_mail);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return adminMemberDtos.size() > 0 ? adminMemberDtos.get(0) : null;
+		
+	}
+
+	public int updatePassword(String a_m_id, String newPassword) {
+		System.out.println(CLASS_NAME.concat("updatePassword()"));
+		
+		String sql = "UPDATE tbl_admin_member SET a_m_pw = ? WHERE a_m_id = ?";
+		
+		int result = -1;
+		
+		try {
+			result = jdbcTemplate.update(sql, newPassword, a_m_id);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
+		
+	}
+
 }
 
 

@@ -214,6 +214,26 @@ public class AdminMemberController {
 		
 	}
 	
+	/*
+	 * 비밀번호 찾기 확인
+	 * /admin/member/findPasswordConfirm
+	 */
+	@PostMapping("/findPasswordConfirm")
+	public String findPasswordConfirm(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("findPasswordConfirm()"));
+		
+		String nextPage = "admin/member/find_password_ok";
+		
+		int result = adminMemberService.findPasswordConfirm(adminMemberDto);
+		
+		if (result <= 0) {
+			nextPage = "admin/member/find_password_ng";
+		}
+		
+		return nextPage;
+		
+	}
+	
 }
 
 

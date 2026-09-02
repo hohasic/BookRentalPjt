@@ -26,7 +26,7 @@
 					<li><a href="#none">대출도서</a></li>
 					<li><a href="#none">전체도서</a></li>
 					<li><a href="#none">희망도서(입고처리)</a></li>
-					<li><a href="#none">도서등록</a></li>
+					<li><a href="<c:url value='/book/admin/registerBookForm' />">도서등록</a></li>
 				
 				</ul>
 				

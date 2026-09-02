@@ -45,10 +45,9 @@
 				</form>
 			</div>
 			
-			
 			<div class="others">
-				<a href="<c:url value='/admin/member/logoutConfirm' />">logout</a>
-				<a href="<c:url value='/admin/member/modifyAccountForm' />">modify account</a>
+				<a href="<c:url value='/admin/member/createAccountForm' />">create account</a>
+				<a href="<c:url value='/admin/member/loginForm' />">login</a>
 			</div>
 		
 		</div>

@@ -1,10 +1,14 @@
 package com.office.library.admin.member;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +23,15 @@ public class AdminMemberService {
 	
 	final private AdminMemberDao adminMemberDao;
 	final private PasswordEncoder passwordEncoder;
+	final private JavaMailSenderImpl javaMailSenderImpl;
 	
 	public AdminMemberService(
 			AdminMemberDao adminMemberDao, 
-			PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder, 
+			JavaMailSenderImpl javaMailSenderImpl) {
 		this.adminMemberDao = adminMemberDao;
 		this.passwordEncoder = passwordEncoder;
+		this.javaMailSenderImpl = javaMailSenderImpl;
 		
 	}
 
@@ -126,5 +133,91 @@ public class AdminMemberService {
 		return adminMemberDao.updateAdminAccount(adminMemberDto);
 		
 	}
+
+	public int findPasswordConfirm(AdminMemberDto adminMemberDto) {
+		System.out.println(CLASS_NAME.concat("findPasswordConfirm()"));
+		
+		// 1. 인증
+		AdminMemberDto selectedAdminMemberDto = 
+				adminMemberDao.selectAdmin(
+								adminMemberDto.getA_m_id(), 
+								adminMemberDto.getA_m_name(), 
+								adminMemberDto.getA_m_mail());
+		
+		int result = 0;
+		
+		if (selectedAdminMemberDto != null) {
+			// 2. 새로운 비밀번호 생성
+			String newPassword = createNewPassword();
+			
+			String encodedNewPassword = passwordEncoder.encode(newPassword);
+			// 3. db update
+			result = adminMemberDao.updatePassword(adminMemberDto.getA_m_id(), encodedNewPassword);
+			
+			// 4. 사용자 한테 메일 발송
+			if (result > 0) {
+				sendNewPasswordByMail(adminMemberDto.getA_m_mail(), newPassword);
+				
+			}
+			
+		}
+		
+		return result;
+		
+	}
+	
+	private String createNewPassword() {
+		System.out.println(CLASS_NAME.concat("createNewPassword()"));
+		
+		char[] chars = new char[] {
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
+				'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
+				'u', 'v', 'w', 'x', 'y', 'z'
+				};
+	
+		StringBuffer stringBuffer = new StringBuffer();
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.setSeed(new Date().getTime());
+		
+		int index = 0;
+		int length = chars.length;
+		for (int i = 0; i < 8; i++) {                   // q2S1Ji8u
+			index = secureRandom.nextInt(length);		// 2   -> 2, c -> C
+		
+			if (index % 2 == 0) 
+				stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
+			else
+				stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+		
+		}
+		
+		System.out.println(CLASS_NAME.concat("NEW PASSWORD: " + stringBuffer.toString()));
+		
+		return stringBuffer.toString();
+		
+	}
+	
+	private void sendNewPasswordByMail(String toMailAddr, String newPassword) {
+		System.out.println(CLASS_NAME.concat("sendNewPasswordByMail()"));
+		
+		final MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
+			
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				mimeMessageHelper.setTo("nikecafe@naver.com");
+//				mimeMessageHelper.setTo(toMailAddr);
+				mimeMessageHelper.setSubject("[DW Academy] 새 비밀번호 안내입니다.");
+				mimeMessageHelper.setText("새 비밀번호 : " + newPassword, true);
+				
+			}
+			
+		};
+		javaMailSenderImpl.send(mimeMessagePreparator);	
+		
+	}
+	
+	
 
 }
