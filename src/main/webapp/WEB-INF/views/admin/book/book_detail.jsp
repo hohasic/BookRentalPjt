@@ -10,6 +10,8 @@
 
 <link href="<c:url value='/resources/css/admin/book_detail.css' />" rel="stylesheet" type="text/css">
 
+<jsp:include page="../include/book_detail_js.jsp" />
+
 </head>
 <body>
 
@@ -88,10 +90,12 @@
 				</c:url>
 				<a href="${modify_url}">도서수정</a>
 				
+				<!--
 				<c:url value='/book/admin/deleteBookForm' var='delete_url'>
 					<c:param name="b_no" value="${bookDto.b_no}"/>
 				</c:url>
-				<a href="${delete_url}">도서삭제</a>
+				-->
+				<a href="#none" onclick="deleteBook(${bookDto.b_no}, '${bookDto.b_name}');">도서삭제</a>
 				
 			</div>
 		

@@ -73,5 +73,14 @@ public class BookService {
 		return result;
 		
 	}
+
+	public int deleteBookConfirm(int b_no) {
+		System.out.println(CLASS_NAME.concat("deleteBookConfirm()"));
+		
+		int result = bookDao.deleteBook(b_no);
+		
+		return result;
+		
+	}
 	
 }

@@ -132,10 +132,18 @@ public class AdminMemberController {
 	
 	// by ModelAndView = view + model
 	@GetMapping("/listupAdmin")
-	public ModelAndView listupAdmin() {
+	public ModelAndView listupAdmin(HttpSession session) {
 		System.out.println(CLASS_NAME.concat("listupAdmin()"));
 		
 		String nextPage = "admin/member/listup_admins";
+		
+		Object object = session.getAttribute("loginedAdminMemberId");
+		if (object == null) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("redirect:/admin/member/loginForm");
+			return modelAndView;
+			
+		}
 		
 		List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
 		
@@ -151,8 +159,15 @@ public class AdminMemberController {
 	
 	// /admin/member/setAdminApproval
 	@GetMapping("/setAdminApproval")
-	public String setAdminApproval(@RequestParam("a_m_no") int a_m_no) {
+	public String setAdminApproval(
+			@RequestParam("a_m_no") int a_m_no, 
+			HttpSession session) {
 		System.out.println(CLASS_NAME.concat("setAdminApproval()"));
+		
+		Object object = session.getAttribute("loginedAdminMemberId");
+		if (object == null) {
+			return "redirect:/admin/member/loginForm";
+		}
 		
 		String nextPage = "redirect:/admin/member/listupAdmin";
 		
@@ -169,6 +184,10 @@ public class AdminMemberController {
 	@GetMapping("/modifyAccountForm")
 	public String modifyAccountForm(HttpSession session, Model model) {
 		System.out.println(CLASS_NAME.concat("modifyAccountForm()"));
+		
+		if (session.getAttribute("loginedAdminMemberId") == null) {
+			return "redirect:/admin/member/loginForm";
+		}
 		
 		String nextPage = "admin/member/modify_account_form";
 		
