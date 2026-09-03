@@ -116,6 +116,40 @@ public class BookController {
 		
 	}
 	
+	/*
+	 * 도서 상세 페이지
+	 * /book/admin/bookDetail
+	 */
+	@GetMapping("/bookDetail")
+	public String bookDetail(@RequestParam("b_no") int b_no, Model model) {
+		System.out.println(CLASS_NAME.concat("bookDetail()"));
+		
+		String nextPage = "admin/book/book_detail";
+		
+		BookDto bookDto = bookService.bookDetail(b_no);
+		model.addAttribute("bookDto", bookDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 도서 수정 양식
+	 * /book/admin/modifyBookForm
+	 */
+	@GetMapping("/modifyBookForm")
+	public String modifyBookForm(@RequestParam("b_no") int b_no, Model model) {
+		System.out.println(CLASS_NAME.concat("modifyBookForm()"));
+		
+		String nextPage = "admin/book/modify_book_form";
+		
+		BookDto bookDto = bookService.modifyBookForm(b_no);
+		model.addAttribute("bookDto", bookDto);
+		
+		return nextPage;
+				
+	}
+	
 }
 
 

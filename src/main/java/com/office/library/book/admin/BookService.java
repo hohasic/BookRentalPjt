@@ -50,5 +50,19 @@ public class BookService {
 		return bookDao.selectBooksBySearch(b_name);
 		
 	}
+
+	public BookDto bookDetail(int b_no) {
+		System.out.println(CLASS_NAME.concat("bookDetail()"));
+
+		return bookDao.selectBookByBNo(b_no);
+		
+	}
+
+	public BookDto modifyBookForm(int b_no) {
+		System.out.println(CLASS_NAME.concat("modifyBookForm()"));
+		
+		return bookDetail(b_no);
+		
+	}
 	
 }

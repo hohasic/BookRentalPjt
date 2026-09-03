@@ -44,7 +44,12 @@
 					<tbody>
 						<c:forEach var="item" items="${bookDtos}">
 						<tr>
-							<td>${item.b_name}</td>
+							<td>
+							<c:url value='/book/admin/bookDetail' var='detail_url'>
+								<c:param name="b_no" value="${item.b_no}"/>
+							</c:url>
+							<a href="${detail_url}">${item.b_name}</a>
+							</td>
 							<td>${item.b_author}</td>
 							<td>${item.b_pulisher}</td>
 							<td>${item.b_pulish_year}</td>
