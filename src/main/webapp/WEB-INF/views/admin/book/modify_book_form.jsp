@@ -38,6 +38,8 @@
 					enctype="multipart/form-data"
 					>
 					
+					<input type="hidden" name="b_no" value="${bookDto.b_no}">
+					
 					<input type="text" name="b_name" value="${bookDto.b_name}" placeholder="INPUT BOOK NAME"><br>
 					<input type="text" name="b_author" value="${bookDto.b_author}" placeholder="INPUT BOOK AUTHOR"><br>
 					<input type="text" name="b_pulisher" value="${bookDto.b_pulisher}" placeholder="INPUT BOOK PUBLISHER"><br>
@@ -46,11 +48,11 @@
 					<input type="text" name="b_call_number" value="${bookDto.b_call_number}" placeholder="INPUT BOOK CALL NUMBER"><br>
 					<select name="b_rantal_able">
 						<option value="">SELECT BOOK RANTAL ABLE.</option>
-						<option value="0" <c:if test="${bookDto.b_rantal_able eq '0' }"> selected </c:if>>UNABLE</option>
-						<option value="1" <c:if test="${bookDto.b_rantal_able eq '1' }"> selected </c:if>>ABLE</option>
+						<option value="0" <c:if test="${bookDto.b_rantal_able eq '0'}"> selected </c:if>>UNABLE</option>
+						<option value="1" <c:if test="${bookDto.b_rantal_able eq '1'}"> selected </c:if>>ABLE</option>
 					</select><br>
 					<input type="file" name="file"><br>
-					<input type="button" value="register book" onclick="registerBookForm();">
+					<input type="button" value="modify book" onclick="modifyBookForm();">
 					<input type="reset" value="reset">
 				</form>
 				

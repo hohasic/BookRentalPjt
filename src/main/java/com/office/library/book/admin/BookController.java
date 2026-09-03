@@ -150,6 +150,36 @@ public class BookController {
 				
 	}
 	
+	/*
+	 * 도서 수정 확인
+	 * /book/admin/modifyBookConfirm
+	 */
+	@PostMapping("/modifyBookConfirm")
+	public String modifyBookConfirm(
+			BookDto bookDto, 
+			@RequestParam("file") MultipartFile file) {
+		System.out.println(CLASS_NAME.concat("modifyBookConfirm()"));
+		
+		String nextPage = "admin/book/modify_book_ok";
+		
+		// SAVE FILE
+		if (!file.getOriginalFilename().equals("")) {
+			
+			String savedFileName = uploadFileService.upload(file);
+			if (savedFileName != null) {
+				bookDto.setB_thumbnail(savedFileName);
+				
+			}
+			
+		}
+		
+		int result = bookService.modifyBookConfirm(bookDto);
+		if (result <= 0)
+			nextPage = "admin/book/modify_book_ng";
+		
+		return nextPage;
+		
+	}
 }
 
 

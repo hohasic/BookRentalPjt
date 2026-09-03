@@ -2,6 +2,7 @@ package com.office.library.book.admin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -150,6 +151,55 @@ public class BookDao {
 		}
 		
 		return bookDtos.size() > 0 ? bookDtos.get(0) : null;
+		
+	}
+
+	public int updateBook(BookDto bookDto) {
+		System.out.println(CLASS_NAME.concat("updateBook()"));
+		
+		List<String> args = new ArrayList<String>();
+		
+		String sql = "UPDATE TBL_BOOK SET ";
+				if (bookDto.getB_thumbnail() != null) {
+					sql += "b_thumbnail = ?, ";
+					args.add(bookDto.getB_thumbnail());
+				}
+				
+				sql += "b_name = ?, ";
+				args.add(bookDto.getB_name());
+				
+				sql += "b_author = ?, ";
+				args.add(bookDto.getB_author());
+				
+				sql += "b_pulisher = ?, ";
+				args.add(bookDto.getB_pulisher());
+				
+				sql += "b_pulish_year = ?, ";
+				args.add(bookDto.getB_pulish_year());
+				
+				sql += "b_isbn = ?, ";
+				args.add(bookDto.getB_isbn());
+				
+				sql += "b_call_number = ?, ";
+				args.add(bookDto.getB_call_number());
+				
+				sql += "b_rantal_able = ? ";
+				args.add(Integer.toString(bookDto.getB_rantal_able()));
+				
+				sql += "WHERE b_no = ?";
+				args.add(Integer.toString(bookDto.getB_no()));
+				
+		int result = -1;
+		try {
+			
+			result = jdbcTemplate.update(sql, args.toArray());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
 		
 	}
 

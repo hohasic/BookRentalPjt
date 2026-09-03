@@ -64,5 +64,14 @@ public class BookService {
 		return bookDetail(b_no);
 		
 	}
+
+	public int modifyBookConfirm(BookDto bookDto) {
+		System.out.println(CLASS_NAME.concat("modifyBookConfirm()"));
+		
+		int result = bookDao.updateBook(bookDto);
+		
+		return result;
+		
+	}
 	
 }
