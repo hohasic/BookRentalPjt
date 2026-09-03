@@ -55,8 +55,17 @@ public class BookController {
 //		UploadFileService uploadFileService = new UploadFileService();
 		String savedFileName = uploadFileService.upload(file);
 		
-		System.out.println("savedFileName ------> " + savedFileName);
-
+		if (savedFileName != null) {
+			bookDto.setB_thumbnail(savedFileName);
+			int result = bookService.registerBookConfirm(bookDto);
+			
+			if (result <= 0)
+				nextPage = "admin/book/register_book_ng";
+			
+		} else {
+			nextPage = "admin/book/register_book_ng";
+			
+		}
 		
 		return nextPage;
 		
