@@ -1,6 +1,11 @@
 package com.office.library.book.admin;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.office.library.book.BookDto;
@@ -63,6 +68,47 @@ public class BookDao {
 		}
 		
 		return result;
+		
+	}
+
+	public List<BookDto> selectBooksBySearch(String b_name) {
+		System.out.println(CLASS_NAME.concat("selectBooksBySearch()"));
+		
+		String sql = "SELECT * FROM tbl_book WHERE b_name LIKE ? ORDER BY b_no DESC";
+		
+		List<BookDto> bookDtos = null;
+		try {
+			bookDtos = jdbcTemplate.query(sql, new RowMapper<BookDto>() {
+
+				@Override
+				public BookDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+					
+					BookDto bookDto = new BookDto();
+					
+					bookDto.setB_no(rs.getInt("b_no"));
+					bookDto.setB_thumbnail(rs.getString("b_thumbnail"));
+					bookDto.setB_name(rs.getString("b_name"));
+					bookDto.setB_author(rs.getString("b_author"));
+					bookDto.setB_pulisher(rs.getString("b_pulisher"));
+					bookDto.setB_pulish_year(rs.getString("b_pulish_year"));
+					bookDto.setB_isbn(rs.getString("b_isbn"));
+					bookDto.setB_call_number(rs.getString("b_call_number"));
+					bookDto.setB_rantal_able(rs.getInt("b_rantal_able"));
+					bookDto.setB_reg_date(rs.getString("b_reg_date"));
+					bookDto.setB_mod_date(rs.getString("b_mod_date"));
+					
+					return bookDto;
+					
+				}
+				
+			}, "%" + b_name + "%");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return bookDtos.size() > 0 ? bookDtos : null;
 		
 	}
 

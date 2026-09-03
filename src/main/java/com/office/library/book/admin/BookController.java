@@ -1,11 +1,15 @@
 package com.office.library.book.admin;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.office.library.book.BookDto;
 import com.office.library.book.admin.util.UploadFileService;
@@ -71,4 +75,54 @@ public class BookController {
 		
 	}
 	
+	/*
+	 * 도서 검색 확인
+	 * /book/admin/searchBookConfirm
+	 */
+	/*
+	@GetMapping("/searchBookConfirm")
+	public String searchBookConfirm(
+			@RequestParam("b_name") String b_name, 
+			Model model) {
+		System.out.println(CLASS_NAME.concat("searchBookConfirm()"));
+		
+		String nextPage = "admin/book/search_book";
+		
+		List<BookDto> bookDtos = bookService.searchBookConfirm(b_name);
+		model.addAttribute("bookDtos", bookDtos);
+		
+		return nextPage;
+		
+	}
+	*/
+	
+	@GetMapping("/searchBookConfirm")
+	public ModelAndView searchBookConfirm(
+			@RequestParam("b_name") String b_name) {
+		System.out.println(CLASS_NAME.concat("searchBookConfirm()"));
+		
+		String nextPage = "admin/book/search_book";
+		
+		List<BookDto> bookDtos = bookService.searchBookConfirm(b_name);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		// 뷰 설정
+		modelAndView.setViewName(nextPage);
+		
+		// 데이터 주입
+		modelAndView.addObject("bookDtos", bookDtos);
+		
+		return modelAndView;
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+

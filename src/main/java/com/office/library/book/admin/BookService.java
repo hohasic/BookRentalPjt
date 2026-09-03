@@ -1,5 +1,7 @@
 package com.office.library.book.admin;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
@@ -39,6 +41,13 @@ public class BookService {
 			return BOOK_ISBN_ALREADY_EXIST;
 			
 		}
+		
+	}
+
+	public List<BookDto> searchBookConfirm(String b_name) {
+		System.out.println(CLASS_NAME.concat("searchBookConfirm()"));
+		
+		return bookDao.selectBooksBySearch(b_name);
 		
 	}
 	
