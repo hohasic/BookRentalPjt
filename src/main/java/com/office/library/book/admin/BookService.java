@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
 
+//@Service("admin.BookService")
 @Service
 public class BookService {
 

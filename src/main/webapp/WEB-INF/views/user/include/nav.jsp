@@ -4,6 +4,8 @@
 
 <link href="<c:url value='/resources/css/user/include/nav.css'/>" rel="stylesheet" type="text/css">
 
+<jsp:include page="./nav_js.jsp" />
+
 <nav>
 	
 	<div id="nav_wrap">
@@ -36,17 +38,15 @@
 			}
 		%>
 		
-		
-		
 		<div class="search">
 			
 			<form 
-				action=""
-				name=""
+				action="<c:url value='/book/user/searchBookConfirm'/>"
+				name="search_book_form"
 				method="get">
 				
 				<input type="text" name="b_name" placeholder="Enter the name of the book you are looking for.">
-				<input type="button" value="search">
+				<input type="button" value="search" onclick="searchBookForm();">
 			</form>
 			
 		</div>

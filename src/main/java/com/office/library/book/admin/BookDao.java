@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.office.library.book.BookDto;
 
+//@Repository("admin.BookDao")
 @Repository
 public class BookDao {
 

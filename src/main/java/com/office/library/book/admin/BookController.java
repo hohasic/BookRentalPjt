@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.office.library.book.BookDto;
 import com.office.library.book.admin.util.UploadFileService;
 
+//@Controller("admin.BookController")
 @Controller
 @RequestMapping("/book/admin")   // /book/admin/registerBookForm
 public class BookController {
