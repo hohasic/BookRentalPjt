@@ -7,7 +7,7 @@
 	<div id="header_wrap">
 		<div class="menu">
 			<ul>
-				<li><a class="user" href="#none">USER HOME</a></li>
+				<li><a class="user" href="<c:url value='/'/>">USER HOME</a></li>
 				<li><a class="admin" href="<c:url value='/admin'/>">ADMIN HOME</a></li>
 			</ul>
 		</div>
