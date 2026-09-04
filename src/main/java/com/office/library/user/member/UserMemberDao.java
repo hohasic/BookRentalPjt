@@ -129,4 +129,35 @@ public class UserMemberDao {
 		
 	}
 
+	public int updateUserAccount(UserMemberDto userMemberDto) {
+		System.out.println(CLASS_NAME.concat("updateUserAccount()"));
+		
+		String sql =  "UPDATE "
+						+ "tbl_user_member "
+					+ "SET "
+						+ "u_m_name = ?, "
+						+ "u_m_gender = ?, "
+						+ "u_m_mail = ?, "
+						+ "u_m_phone = ? "
+					+ "WHERE "
+						+ "u_m_no = ?";
+		
+		int result = -1;
+		try {
+			result = jdbcTemplate.update(sql, 
+											userMemberDto.getU_m_name(), 
+											userMemberDto.getU_m_gender(), 
+											userMemberDto.getU_m_mail(), 
+											userMemberDto.getU_m_phone(), 
+											userMemberDto.getU_m_no());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
+		
+	}
+
 }

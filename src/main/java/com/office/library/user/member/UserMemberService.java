@@ -65,4 +65,23 @@ public class UserMemberService {
 		
 	}
 
+	public UserMemberDto modifyAccountForm(String loginedUserMemberId) {
+		System.out.println(CLASS_NAME.concat("modifyAccountForm()"));
+		
+		UserMemberDto loginedUserMemberDto =
+				userMemberDao.selectUser(loginedUserMemberId);
+		
+		return loginedUserMemberDto;
+		
+	}
+
+	public int modifyAccountConfirm(UserMemberDto userMemberDto) {
+		System.out.println(CLASS_NAME.concat("modifyAccountConfirm()"));
+		
+		int result = userMemberDao.updateUserAccount(userMemberDto);
+		
+		return result;
+		
+	}
+
 }

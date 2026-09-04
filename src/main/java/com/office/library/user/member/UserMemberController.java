@@ -3,6 +3,7 @@ package com.office.library.user.member;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -112,5 +113,51 @@ public class UserMemberController {
 		
 	}
 	
+	/*
+	 * 사용자 회원 계정 수정 양식
+	 * /user/member/modifyAccountForm
+	 */
+	@GetMapping("/modifyAccountForm")
+	public String modifyAccountForm(HttpSession session, Model model) {
+		System.out.println(CLASS_NAME.concat("modifyAccountForm()"));
+		
+		String nextPage = "user/member/modify_account_form";
+		
+		String loginedUserMemberId;
+		Object object = session.getAttribute("loginedUserMemberId");
+		if (object != null) {
+			loginedUserMemberId = String.valueOf(object);
+			
+		} else {
+			return "redirect:/user/member/loginForm";
+			
+		}
+		
+		UserMemberDto loginedUserMemberDto =
+				userMemberService.modifyAccountForm(loginedUserMemberId);
+		model.addAttribute("loginedUserMemberDto", loginedUserMemberDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 사용자 회원 계정 수정 확인
+	 * /user/member/modifyAccountConfirm
+	 */
+	@PostMapping("/modifyAccountConfirm")
+	public String modifyAccountConfirm(UserMemberDto userMemberDto) {
+		System.out.println(CLASS_NAME.concat("modifyAccountConfirm()"));
+		
+		String nextPage = "user/member/modify_account_ok";
+		
+		int result = userMemberService.modifyAccountConfirm(userMemberDto);
+		
+		if (result <= 0)
+			nextPage = "user/member/modify_account_ng";
+		
+		return nextPage;
+		
+	}
 	
 }
