@@ -105,7 +105,8 @@ public class AdminMemberController {
 		
 		String nextPage = "redirect:/admin";
 		
-		session.removeAttribute("loginedAdminMemberId");
+//		session.removeAttribute("loginedAdminMemberId");
+		session.invalidate();	// 무효화
 		
 		return nextPage;
 		

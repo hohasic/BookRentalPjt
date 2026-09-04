@@ -1,7 +1,10 @@
 package com.office.library.user.member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -33,5 +36,81 @@ public class UserMemberController {
 		return nextPage;
 		
 	}
+	
+	/*
+	 * 사용자 회원 가입 확인
+	 * /user/member/createAccountConfirm
+	 */
+	@PostMapping("/createAccountConfirm")
+	public String createAccountConfirm(UserMemberDto userMemberDto) {
+		System.out.println(CLASS_NAME.concat("createAccountConfirm()"));
+		
+		String nextPage = "user/member/create_account_ok";
+		
+		int result = userMemberService.createAccountConfirm(userMemberDto);
+		
+		if (result <= 0)
+			nextPage = "user/member/create_account_ng";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 사용자 회원 로그인 양식
+	 * /user/member/loginForm
+	 */
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		System.out.println(CLASS_NAME.concat("loginForm()"));
+		
+		String nextPage = "user/member/login_form";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 사용자 회원 로그인 확인
+	 * /user/member/loginConfirm
+	 */
+	@PostMapping("/loginConfirm")
+	public String loginConfirm(UserMemberDto userMemberDto, HttpSession session) {
+		System.out.println(CLASS_NAME.concat("loginConfirm()"));
+		
+		String nextPage = "user/member/login_ok";
+		
+		String loginedUserMemberId = userMemberService.loginConfirm(userMemberDto);
+		
+		if (loginedUserMemberId != null) {
+			session.setAttribute("loginedUserMemberId", loginedUserMemberId);
+			session.setMaxInactiveInterval(60 * 30);
+			
+		} else {
+			nextPage = "user/member/login_ng";
+			
+		}
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 사용자 회원 로그아웃 확인
+	 * /user/member/logoutConfirm
+	 */
+	@GetMapping("/logoutConfirm")
+	public String logoutConfirm(HttpSession session) {
+		System.out.println(CLASS_NAME.concat("logoutConfirm()"));
+		
+		String nextPage = "redirect:/";
+		
+//		session.removeAttribute("loginedUserMemberId");
+		session.invalidate();	// 무효화
+		
+		return nextPage;
+		
+	}
+	
 	
 }

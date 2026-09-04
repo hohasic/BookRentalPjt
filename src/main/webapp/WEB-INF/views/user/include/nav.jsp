@@ -8,17 +8,35 @@
 	
 	<div id="nav_wrap">
 		
-		<div class="menu">
+		<%
+			Object object = session.getAttribute("loginedUserMemberId");
+			if (object == null) {
+		%>
+			<div class="menu">
 			
-			<ul>
-				<li><a href="<c:url value='/user/member/createAccountForm'/>">회원가입</a></li>			
-				<li><a href="#none">로그인</a></li>			
-				<li><a href="#none">로그아웃</a></li>			
-				<li><a href="#none">계정수정</a></li>			
-				<li><a href="#none">나의책장</a></li>			
-			</ul>
+				<ul>
+					<li><a href="<c:url value='/user/member/createAccountForm'/>">회원가입</a></li>			
+					<li><a href="<c:url value='/user/member/loginForm'/>">로그인</a></li>					
+				</ul>
+				
+			</div>
+		<%
+			} else {
+		%>
+			<div class="menu">
 			
-		</div>
+				<ul>	
+					<li><a href="<c:url value='/user/member/logoutConfirm'/>">로그아웃</a></li>			
+					<li><a href="#none">계정수정</a></li>			
+					<li><a href="#none">나의책장</a></li>			
+				</ul>
+				
+			</div>
+		<%
+			}
+		%>
+		
+		
 		
 		<div class="search">
 			
