@@ -66,11 +66,6 @@
 				
 			</div>
 			
-			<div class="others">
-				<a href="<c:url value='/user/member/createAccountForm'/>">create account</a>
-				<a href="<c:url value='/user/member/loginForm'/>">login</a>
-			</div>
-			
 		</div>
 	
 	</section>

@@ -23,5 +23,21 @@ public class BookService {
 		return bookDao.selectBooksBySearch(b_name);
 		
 	}
+
+	public BookDto bookDetail(int b_no) {
+		System.out.println(CLASS_NAME.concat("bookDetail()"));
+			
+		return bookDao.selectBookByBNo(b_no);
+		
+	}
+
+	public int rentalBookConfirm(int b_no, int u_m_no) {
+		System.out.println(CLASS_NAME.concat("rentalBookConfirm()"));
+		
+		
+		
+		return 0;
+		
+	}
 	
 }
