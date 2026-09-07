@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 import com.office.library.book.RentalBookDto;
 
 import lombok.RequiredArgsConstructor;
@@ -138,6 +139,87 @@ public class BookDao {
 		}
 		
 		return rentalBookDtos;
+		
+	}
+
+
+	public List<RentalBookDto> selectRentalBookHistory(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("selectRentalBookHistory()"));
+		
+		String sql =  "SELECT * FROM tbl_rental_book rb "
+					+ "JOIN tbl_book b "
+					+ "ON rb.b_no = b.b_no "
+					+ "JOIN tbl_user_member um "
+					+ "ON rb.u_m_no = um.u_m_no "
+					+ "WHERE rb.u_m_no = ? "
+					+ "ORDER BY rb.rb_reg_date DESC";
+		
+		List<RentalBookDto> rentalBookDtos = null;
+		
+		try {
+			
+			RowMapper<RentalBookDto> rowMapper = BeanPropertyRowMapper.newInstance(RentalBookDto.class);
+			rentalBookDtos = jdbcTemplate.query(sql, rowMapper, u_m_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return rentalBookDtos;
+		
+	}
+
+
+	public int insertHopeBook(HopeBookDto hopeBookDto) {
+		System.out.println(CLASS_NAME.concat("insertHopeBook()"));
+		
+		String sql =  "INSERT INTO tbl_hope_book("
+						+ "u_m_no, "
+						+ "hb_name, "
+						+ "hb_author, "
+						+ "hb_publisher, "
+						+ "hb_publish_year) "
+					+ "VALUES(?, ?, ?, ?, ?)";
+		
+		int result = -1;
+		try {
+			result = jdbcTemplate.update(sql, 
+											hopeBookDto.getU_m_no(), 
+											hopeBookDto.getHb_name(), 
+											hopeBookDto.getHb_author(), 
+											hopeBookDto.getHb_publisher(), 
+											hopeBookDto.getHb_publish_year());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
+		
+	}
+
+
+	public List<HopeBookDto> selectRequestHopeBooks(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("selectRequestHopeBooks()"));
+		
+		String sql =  "SELECT * FROM tbl_hope_book "
+					+ "WHERE u_m_no = ?";
+		
+		List<HopeBookDto> hopeBookDtos = null;
+		try {
+			hopeBookDtos = jdbcTemplate.query(
+											sql, 
+											BeanPropertyRowMapper.newInstance(HopeBookDto.class), 
+											u_m_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return hopeBookDtos;
 		
 	}
 	

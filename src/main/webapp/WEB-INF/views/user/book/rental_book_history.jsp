@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <jsp:include page="../../include/title.jsp" />
 
-<link href="<c:url value='/resources/css/user/bookshelf.css'/>" rel="stylesheet" type="text/css">
+<link href="<c:url value='/resources/css/user/rental_book_history.css'/>" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -21,14 +22,10 @@
 		<div id="section_wrap">
 			
 			<div class="word">
-				<h3>MY BOOKSHELF</h3>
+				<h3>RENTAL BOOK HISTORY</h3>
 			</div>
 			
-			<%-- 대출 목록 --%>
-			<div class="category_name">
-				<h4>대출 목록</h4>
-			</div>
-			<div class="rental_book_list">
+			<div class="rental_book_history">
 				<table>
 					<thead>
 						<tr>
@@ -36,6 +33,7 @@
 							<th>ISBN</th>
 							<th>청구기호</th>
 							<th>대출일</th>
+							<th>반납일</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,21 +48,16 @@
 								<td>${item.b_isbn}</td>
 								<td>${item.b_call_number}</td>
 								<td>${item.rb_start_date}</td>
+								<td>
+									<c:choose>
+										<c:when test="${fn:contains(item.rb_end_date, '1000-01-01')}">대출중</c:when>
+										<c:otherwise>${item.rb_end_date}</c:otherwise>
+									</c:choose>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-			</div>
-			
-			<%-- 
-				- 전체 대출 이력
-				- 희망 도서 요청
-				- 희망 도서 요청 목록
-			--%>
-			<div class="other_category">
-				<a href="<c:url value='/book/user/listupRentalBookHistory'/>">전체 대출 이력</a>
-				<a href="<c:url value='/book/user/requestHopeBookForm'/>">희망 도서 요청</a>
-				<a href="<c:url value='/book/user/listupRequestHopeBook'/>">회망 도서 요청 목록</a>
 			</div>
 			
 		</div>

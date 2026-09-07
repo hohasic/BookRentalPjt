@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 import com.office.library.book.RentalBookDto;
 import com.office.library.user.member.UserMemberDto;
 
@@ -111,7 +112,6 @@ public class BookController {
 		String nextPage = "user/book/bookshelf";
 		
 		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
-		
 		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
 		
 		List<RentalBookDto> rentalBookDtos =
@@ -121,6 +121,88 @@ public class BookController {
 		return nextPage;
 		
 	}
+	
+	/*
+	 * 전체 대출 이력
+	 * /book/user/listupRentalBookHistory
+	 */
+	@GetMapping("/listupRentalBookHistory")
+	public String listupRentalBookHistory(HttpSession session, Model model) {
+		System.out.println(CLASS_NAME.concat("listupRentalBookHistory()"));
 		
+		String nextPage = "user/book/rental_book_history";
+		
+		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
+		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
+		
+		List<RentalBookDto> rentalBookDtos = bookService.listupRentalBookHistory(loginedUserMemberDto.getU_m_no());
+		model.addAttribute("rentalBookDtos", rentalBookDtos);
+		
+		return nextPage;
+		
+		
+	}
+	
+	/*
+	 * 희망 도서 요청
+	 * /book/user/listupRentalBookHistory
+	 */
+	@GetMapping("/requestHopeBookForm")
+	public String requestHopeBookForm() {
+		System.out.println(CLASS_NAME.concat("requestHopeBookForm()"));
+		
+		String nextPage = "user/book/request_hope_book_form";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 요청 확인
+	 * /book/user/requestHopeBookConfirm
+	 */
+	@GetMapping("/requestHopeBookConfirm")
+	public String requestHopeBookConfirm(
+			HopeBookDto hopeBookDto, 
+			HttpSession session) {
+		System.out.println(CLASS_NAME.concat("requestHopeBookConfirm()"));
+		
+		String nextPage = "user/book/request_hope_book_ok";
+		
+		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
+		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
+		hopeBookDto.setU_m_no(loginedUserMemberDto.getU_m_no());
+		
+		int result = bookService.requestHopeBookConfirm(hopeBookDto);
+		if (result <= 0)
+			nextPage = "user/book/request_hope_book_ng";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 요청 목록
+	 * /book/user/listupRentalBookHistory
+	 */
+	@GetMapping("/listupRequestHopeBook")
+	public String listupRequestHopeBook(HttpSession session, Model model) {
+		System.out.println(CLASS_NAME.concat("listupRequestHopeBook()"));
+		
+		String nextPage = "user/book/list_hope_book";
+		
+		String loginedUserMemberId = 
+				String.valueOf(session.getAttribute("loginedUserMemberId"));
+		UserMemberDto loginedUserMemberDto = 
+				bookService.selectUser(loginedUserMemberId);
+		
+		List<HopeBookDto> hopeBookDtos =
+				bookService.listupRequestHopeBook(loginedUserMemberDto.getU_m_no());
+		
+		model.addAttribute("hopeBookDtos", hopeBookDtos);
+		
+		return nextPage;
+		
+	}
 	
 }

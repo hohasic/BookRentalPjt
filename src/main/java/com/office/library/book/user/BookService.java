@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 import com.office.library.book.RentalBookDto;
 import com.office.library.user.member.UserMemberDao;
 import com.office.library.user.member.UserMemberDto;
@@ -59,6 +60,27 @@ public class BookService {
 		System.out.println(CLASS_NAME.concat("enterBookshelf()"));
 		
 		return bookDao.selectRentalBooks(u_m_no);
+		
+	}
+
+	public List<RentalBookDto> listupRentalBookHistory(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("listupRentalBookHistory()"));
+		
+		return bookDao.selectRentalBookHistory(u_m_no);
+		
+	}
+
+	public int requestHopeBookConfirm(HopeBookDto hopeBookDto) {
+		System.out.println(CLASS_NAME.concat("requestHopeBookConfirm()"));
+		
+		return bookDao.insertHopeBook(hopeBookDto);
+		
+	}
+
+	public List<HopeBookDto> listupRequestHopeBook(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("listupRequestHopeBook()"));
+		
+		return bookDao.selectRequestHopeBooks(u_m_no);
 		
 	}
 	
