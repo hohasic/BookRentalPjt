@@ -24,7 +24,7 @@
 				<h3>HOPE BOOKS</h3>
 			</div>
 			
-			<div class="list_hope_book">
+			<div class="list_hope_books">
 				
 				<table>
 					<thead>
@@ -42,14 +42,14 @@
 					<tbody>
 						<c:forEach var="item" items="${hopeBookDtos}">
 							<tr>
-								<td>도서명</td>
-								<td>저자</td>
-								<td>발행처</td>
-								<td>발행연도</td>
-								<td>요청일</td>
-								<td>요청 수정일</td>
-								<td>처리상태</td>
-								<td>처리상태 수정일</td>
+								<td>${item.hb_name}</td>
+								<td>${item.hb_author}</td>
+								<td>${item.hb_publisher}</td>
+								<td>${item.hb_publish_year}</td>
+								<td>${item.hb_reg_date}</td>
+								<td>${item.hb_mod_date}</td>
+								<td>${item.hb_result}</td>
+								<td>${item.hb_result_last_date}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
