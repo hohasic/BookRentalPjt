@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.RentalBookDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -83,6 +84,60 @@ public class BookDao {
 		}
 		
 		return result;
+		
+	}
+
+
+	public void updateRentalBookAble(int b_no) {
+		System.out.println(CLASS_NAME.concat("updateRentalBookAble()"));
+		
+		String sql =  "UPDATE tbl_book "
+					+ "SET b_rantal_able = 0 "
+					+ "WHERE b_no = ?";
+		
+		try {
+			jdbcTemplate.update(sql, b_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
+
+
+	public List<RentalBookDto> selectRentalBooks(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("selectRentalBooks()"));
+		
+		/*
+		    SELECT * FROM tbl_rental_book rb
+			JOIN tbl_book b
+			ON rb.b_no = b.b_no 
+			JOIN tbl_user_member um
+			ON rb.u_m_no = um.u_m_no 
+			WHERE rb.u_m_no = 1 AND rb.rb_end_date = '1000-01-01 00:00:00';
+		 */
+		
+		String sql =  "SELECT * FROM tbl_rental_book rb "
+					+ "JOIN tbl_book b "
+					+ "ON rb.b_no = b.b_no "
+					+ "JOIN tbl_user_member um "
+					+ "ON rb.u_m_no = um.u_m_no "
+					+ "WHERE rb.u_m_no = ? AND rb.rb_end_date = '1000-01-01 00:00:00'";
+		
+		List<RentalBookDto> rentalBookDtos = null;
+		
+		try {
+			
+			RowMapper<RentalBookDto> rowMapper = BeanPropertyRowMapper.newInstance(RentalBookDto.class);
+			rentalBookDtos = jdbcTemplate.query(sql, rowMapper, u_m_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return rentalBookDtos;
 		
 	}
 	

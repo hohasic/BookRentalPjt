@@ -27,6 +27,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/book/user/rentalBookConfirm"/>
+			<mapping path="/book/user/enterBookshelf"/>
 			<mapping path="/user/member/modifyAccountForm"/>
 			<beans:bean class="com.office.library.user.member.UserMemberLoginInterceptor"></beans:bean>
 		</interceptor>

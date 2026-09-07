@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.RentalBookDto;
 import com.office.library.user.member.UserMemberDao;
 import com.office.library.user.member.UserMemberDto;
 
@@ -37,9 +38,13 @@ public class BookService {
 	public int rentalBookConfirm(int b_no, int u_m_no) {
 		System.out.println(CLASS_NAME.concat("rentalBookConfirm()"));
 		
-		int result = bookDao.insertRentalBook(b_no, u_m_no);
+		int result = bookDao.insertRentalBook(b_no, u_m_no);  // tbl_rental_book
 		
-		return 0;
+		if (result >= 0) {
+			bookDao.updateRentalBookAble(b_no);
+		}
+		
+		return result;
 		
 	}
 
@@ -47,6 +52,13 @@ public class BookService {
 		System.out.println(CLASS_NAME.concat("selectUser()"));
 		
 		return userMemberDao.selectUser(loginedUserMemberId);
+		
+	}
+
+	public List<RentalBookDto> enterBookshelf(int u_m_no) {
+		System.out.println(CLASS_NAME.concat("enterBookshelf()"));
+		
+		return bookDao.selectRentalBooks(u_m_no);
 		
 	}
 	

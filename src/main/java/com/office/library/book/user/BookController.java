@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.RentalBookDto;
 import com.office.library.user.member.UserMemberDto;
 
 import lombok.RequiredArgsConstructor;
@@ -92,7 +93,31 @@ public class BookController {
 		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
 		
 		int result = bookService.rentalBookConfirm(b_no, loginedUserMemberDto.getU_m_no());
-
+		if (result <= 0)
+			nextPage = "user/book/rental_book_ng";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 나의 책장 보기
+	 * /book/user/enterBookshelf
+	 */
+	@GetMapping("/enterBookshelf")
+	public String enterBookshelf(HttpSession session, Model model) {
+		System.out.println(CLASS_NAME.concat("enterBookshelf()"));
+		
+		String nextPage = "user/book/bookshelf";
+		
+		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
+		
+		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
+		
+		List<RentalBookDto> rentalBookDtos =
+				bookService.enterBookshelf(loginedUserMemberDto.getU_m_no());
+		model.addAttribute("rentalBookDtos", rentalBookDtos);
+		
 		return nextPage;
 		
 	}

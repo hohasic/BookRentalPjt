@@ -30,7 +30,7 @@
 				<ul>	
 					<li><a href="<c:url value='/user/member/logoutConfirm'/>">로그아웃</a></li>			
 					<li><a href="<c:url value='/user/member/modifyAccountForm'/>">계정수정</a></li>			
-					<li><a href="#none">나의책장</a></li>			
+					<li><a href="/book/user/enterBookshelf">나의책장</a></li>			
 				</ul>
 				
 			</div>
