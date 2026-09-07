@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.office.library.book.BookDto;
+import com.office.library.user.member.UserMemberDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -86,7 +87,11 @@ public class BookController {
 		}
 		*/
 		
-		int result = bookService.rentalBookConfirm(b_no, 0);
+		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
+		
+		UserMemberDto loginedUserMemberDto = bookService.selectUser(loginedUserMemberId);
+		
+		int result = bookService.rentalBookConfirm(b_no, loginedUserMemberDto.getU_m_no());
 
 		return nextPage;
 		

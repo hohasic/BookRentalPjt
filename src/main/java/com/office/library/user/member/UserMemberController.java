@@ -123,6 +123,7 @@ public class UserMemberController {
 		
 		String nextPage = "user/member/modify_account_form";
 		
+		/*
 		String loginedUserMemberId;
 		Object object = session.getAttribute("loginedUserMemberId");
 		if (object != null) {
@@ -132,6 +133,9 @@ public class UserMemberController {
 			return "redirect:/user/member/loginForm";
 			
 		}
+		*/
+		
+		String loginedUserMemberId = String.valueOf(session.getAttribute("loginedUserMemberId"));
 		
 		UserMemberDto loginedUserMemberDto =
 				userMemberService.modifyAccountForm(loginedUserMemberId);

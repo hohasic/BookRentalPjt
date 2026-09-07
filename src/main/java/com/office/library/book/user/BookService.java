@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
+import com.office.library.user.member.UserMemberDao;
+import com.office.library.user.member.UserMemberDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +18,7 @@ public class BookService {
 	final private String CLASS_NAME = "[BookService] ";
 	
 	final private BookDao bookDao;
+	final private UserMemberDao userMemberDao;
 
 	public List<BookDto> searchBookConfirm(String b_name) {
 		System.out.println(CLASS_NAME.concat("searchBookConfirm"));
@@ -34,9 +37,16 @@ public class BookService {
 	public int rentalBookConfirm(int b_no, int u_m_no) {
 		System.out.println(CLASS_NAME.concat("rentalBookConfirm()"));
 		
-		
+		int result = bookDao.insertRentalBook(b_no, u_m_no);
 		
 		return 0;
+		
+	}
+
+	public UserMemberDto selectUser(String loginedUserMemberId) {
+		System.out.println(CLASS_NAME.concat("selectUser()"));
+		
+		return userMemberDao.selectUser(loginedUserMemberId);
 		
 	}
 	

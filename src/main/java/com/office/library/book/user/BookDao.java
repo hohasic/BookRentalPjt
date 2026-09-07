@@ -64,5 +64,26 @@ public class BookDao {
 		return bookDtos.size() > 0 ? bookDtos.get(0) : null;
 		
 	}
+
+
+	public int insertRentalBook(int b_no, int u_m_no) {
+		System.out.println(CLASS_NAME.concat("insertRentalBook()"));
+		
+		String sql =  "INSERT INTO tbl_rental_book(b_no, u_m_no) "
+					+ "VALUES(?, ?)";
+		
+		int result = -1;
+		
+		try {
+			result = jdbcTemplate.update(sql, b_no, u_m_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return result;
+		
+	}
 	
 }
