@@ -104,11 +104,18 @@ public class BookService {
 			if (result > 0) {
 				bookDao.updateHopeBookResult(hb_no);
 				
+				return BOOK_REGISTER_SUCCESS;
+				
+			} else {
+				return BOOK_REGISTER_FAIL;
+				
 			}
+			
+		} else {
+			return BOOK_ISBN_ALREADY_EXIST;
 			
 		}
 		
-		return 0;
 	}
 	
 }
