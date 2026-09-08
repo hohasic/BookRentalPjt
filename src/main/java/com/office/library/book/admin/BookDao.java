@@ -248,4 +248,21 @@ public class BookDao {
 		
 	}
 
+	public void updateHopeBookResult(int hb_no) {
+		System.out.println(CLASS_NAME.concat("updateHopeBookResult()"));
+		
+		String sql =  "UPDATE tbl_hope_book "
+					+ "SET hb_result = 1 "
+					+ "WHERE hb_no = ?";
+		
+		try {
+			jdbcTemplate.update(sql, hb_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
+
 }

@@ -1,7 +1,5 @@
 package com.office.library.book;
 
-import com.office.library.user.member.UserMemberDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

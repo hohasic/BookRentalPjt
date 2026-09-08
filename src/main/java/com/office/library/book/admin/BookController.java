@@ -17,9 +17,12 @@ import com.office.library.book.BookDto;
 import com.office.library.book.HopeBookDto;
 import com.office.library.book.admin.util.UploadFileService;
 
+import lombok.RequiredArgsConstructor;
+
 //@Controller("admin.BookController")
 @Controller
 @RequestMapping("/book/admin")   // /book/admin/registerBookForm
+@RequiredArgsConstructor
 public class BookController {
 	
 	final private String CLASS_NAME = "[BookController] ";
@@ -27,12 +30,12 @@ public class BookController {
 	final private BookService bookService;
 	final private UploadFileService uploadFileService;
 	
-	public BookController(BookService bookService, 
-			UploadFileService uploadFileService) {
-		this.bookService = bookService;
-		this.uploadFileService = uploadFileService;
-		
-	}
+//	public BookController(BookService bookService, 
+//			UploadFileService uploadFileService) {
+//		this.bookService = bookService;
+//		this.uploadFileService = uploadFileService;
+//		
+//	}
 	
 	/*
 	 * 도서 등록 양식
@@ -240,6 +243,52 @@ public class BookController {
 		
 		List<HopeBookDto> hopeBookDtos = bookService.getHopeBooks();
 		model.addAttribute("hopeBookDtos", hopeBookDtos);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 입고 처리 양식
+	 * /book/admin/registerHopeBookForm
+	 */
+	@GetMapping("/registerHopeBookForm")
+	public String registerHopeBookForm(HopeBookDto hopeBookDto, Model model) {
+		System.out.println(CLASS_NAME.concat("registerHopeBookForm()"));
+		
+		String nextPage = "admin/book/register_hope_book_form";
+		model.addAttribute("hopeBookDto", hopeBookDto);
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 입고 처리 확인
+	 * /book/admin/registerHopeBookConfirm
+	 */
+	@PostMapping("/registerHopeBookConfirm")
+	public String registerHopeBookConfirm(
+			BookDto bookDto, 
+			@RequestParam("hb_no") int hb_no, 
+			@RequestParam("file") MultipartFile file) {
+		System.out.println(CLASS_NAME.concat("registerHopeBookConfirm()"));
+		
+		String nextPage = "admin/book/register_book_ok";
+		
+		// SAVE FILE
+		String savedFileName = uploadFileService.upload(file);
+		if (savedFileName != null) {
+			bookDto.setB_thumbnail(savedFileName);
+			int result = bookService.registerHopeBookConfirm(bookDto, hb_no);
+			
+			if (result <= 0)
+				nextPage = "admin/book/register_book_ng";
+				
+		} else {
+			nextPage = "admin/book/register_book_ng";
+			
+		}
 		
 		return nextPage;
 		

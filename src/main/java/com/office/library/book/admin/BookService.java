@@ -93,5 +93,22 @@ public class BookService {
 		return hopeBookDtos;
 		
 	}
+
+	public int registerHopeBookConfirm(BookDto bookDto, int hb_no) {
+		System.out.println(CLASS_NAME.concat("registerHopeBookConfirm()"));
+		
+		boolean isISBN = bookDao.isISBN(bookDto.getB_isbn());
+		if(!isISBN) {
+			int result = bookDao.insertBook(bookDto);
+			
+			if (result > 0) {
+				bookDao.updateHopeBookResult(hb_no);
+				
+			}
+			
+		}
+		
+		return 0;
+	}
 	
 }
