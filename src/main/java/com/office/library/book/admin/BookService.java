@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 
 //@Service("admin.BookService")
 @Service
@@ -81,6 +82,15 @@ public class BookService {
 		int result = bookDao.deleteBook(b_no);
 		
 		return result;
+		
+	}
+
+	public List<HopeBookDto> getHopeBooks() {
+		System.out.println(CLASS_NAME.concat("getHopeBooks()"));
+		
+		List<HopeBookDto> hopeBookDtos = bookDao.selectHopeBooks();
+		
+		return hopeBookDtos;
 		
 	}
 	

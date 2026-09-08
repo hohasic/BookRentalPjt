@@ -32,7 +32,11 @@
 			<mapping path="/book/user/requestHopeBookForm"/>
 			<mapping path="/book/user/listupRequestHopeBook"/>
 			<mapping path="/user/member/modifyAccountForm"/>
-			<beans:bean class="com.office.library.user.member.UserMemberLoginInterceptor"></beans:bean>
+			<beans:bean class="com.office.library.user.member.UserMemberLoginInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/book/admin/getHopeBooks"/>
+			<beans:bean class="com.office.library.admin.member.AdminMemberLoginInterceptor" />
 		</interceptor>
 	</interceptors>
 	

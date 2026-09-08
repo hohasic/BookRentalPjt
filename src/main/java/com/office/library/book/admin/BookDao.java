@@ -5,11 +5,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 
 //@Repository("admin.BookDao")
 @Repository
@@ -220,6 +222,29 @@ public class BookDao {
 		}
 		
 		return result;
+		
+	}
+
+	public List<HopeBookDto> selectHopeBooks() {
+		System.out.println(CLASS_NAME.concat("selectHopeBooks()"));
+		
+		String sql =  "SELECT * FROM tbl_hope_book hb "
+					+ "JOIN tbl_user_member um "
+					+ "ON hb.u_m_no = um.u_m_no "
+					+ "ORDER BY hb.hb_no DESC";
+		
+		List<HopeBookDto> hopeBookDtos = new ArrayList<HopeBookDto>();
+		
+		try {
+			RowMapper<HopeBookDto> rowMapper = BeanPropertyRowMapper.newInstance(HopeBookDto.class);
+			hopeBookDtos = jdbcTemplate.query(sql, rowMapper);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return hopeBookDtos;
 		
 	}
 

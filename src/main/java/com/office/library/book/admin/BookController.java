@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.office.library.book.BookDto;
+import com.office.library.book.HopeBookDto;
 import com.office.library.book.admin.util.UploadFileService;
 
 //@Controller("admin.BookController")
@@ -222,6 +223,23 @@ public class BookController {
 		
 		if (result <= 0)
 			nextPage = "admin/book/delete_book_ng";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * 희망 도서 목록
+	 * /book/admin/getHopeBooks
+	 */
+	@GetMapping("/getHopeBooks")
+	public String getHopeBooks(Model model) {
+		System.out.println(CLASS_NAME.concat("getHopeBooks()"));
+		
+		String nextPage = "admin/book/hope_books";
+		
+		List<HopeBookDto> hopeBookDtos = bookService.getHopeBooks();
+		model.addAttribute("hopeBookDtos", hopeBookDtos);
 		
 		return nextPage;
 		

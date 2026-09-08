@@ -48,7 +48,13 @@
 								<td>${item.hb_publish_year}</td>
 								<td>${item.hb_reg_date}</td>
 								<td>${item.hb_mod_date}</td>
-								<td>${item.hb_result}</td>
+								<td>
+								<c:choose>
+									<c:when test="${item.hb_result eq 0}"><c:out value='검토중'/></c:when>
+									<c:when test="${item.hb_result eq 1}"><c:out value='완료'/></c:when>
+									<c:otherwise><c:out value='입고대기'/></c:otherwise>
+								</c:choose>
+								</td>
 								<td>${item.hb_result_last_date}</td>
 							</tr>
 						</c:forEach>
